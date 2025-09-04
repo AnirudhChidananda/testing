@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import TodoItem from "../TodoItem";
 
 const mockTodo = {
@@ -56,7 +55,7 @@ describe("AddTodo", () => {
 
       //ACT
       const checkbox = screen.getByRole("checkbox");
-      await userEvent.click(checkbox);
+      fireEvent.click(checkbox);
 
       expect(mockSetTodos).toHaveBeenCalled(); // ASSERT
     });
@@ -66,7 +65,7 @@ describe("AddTodo", () => {
 
       //ACT
       const button = screen.getByRole("button");
-      await userEvent.click(button);
+      fireEvent.click(button);
 
       expect(mockSetTodos).toHaveBeenCalled(); // ASSERT
     });

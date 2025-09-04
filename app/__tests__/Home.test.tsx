@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Home from "@/app/page";
 
 describe("Home", () => {
@@ -8,14 +7,16 @@ describe("Home", () => {
 
     // ACT
     const input = screen.getByPlaceholderText("New Todo");
-    await userEvent.type(input, "My new todo");
+    fireEvent.change(input, {
+      target: { value: "My new todo" },
+    });
     expect(input).toHaveValue("My new todo"); // ASSERT
 
     // ACT
     const button = screen.getByRole("button", {
       name: "Submit",
     });
-    await userEvent.click(button);
+    fireEvent.click(button);
     expect(input).toHaveValue(""); // ASSERT
 
     const data = await screen.findByText("My new todo");
@@ -28,7 +29,7 @@ describe("Home", () => {
     // ACT
     const checkbox = screen.getAllByRole("checkbox")[0] as HTMLInputElement;
     expect(checkbox.checked).toBeFalsy();
-    await userEvent.click(checkbox);
+    fireEvent.click(checkbox);
     expect(checkbox.checked).toBeTruthy(); // ASSERT
   });
 
@@ -40,7 +41,7 @@ describe("Home", () => {
 
     // ACT
     const button = screen.getAllByTestId("delete-button")[0];
-    await userEvent.click(button);
+    fireEvent.click(button);
 
     expect(todoText).not.toBeInTheDocument(); // ASSERT
   });

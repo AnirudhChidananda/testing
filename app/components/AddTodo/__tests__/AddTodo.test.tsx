@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, fireEvent } from "@testing-library/react";
 import AddTodo from "../AddTodo";
 
 const mockSetTodos = jest.fn();
@@ -31,7 +30,9 @@ describe("AddTodo", () => {
       render(<AddTodo setTodos={mockSetTodos} />); // ARRANGE
 
       const input = screen.getByPlaceholderText("New Todo"); //ACT
-      await userEvent.type(input, "hey there");
+      fireEvent.change(input, {
+        target: { value: "hey there" },
+      });
       expect(input).toHaveValue("hey there"); // ASSERT
     });
 
@@ -39,7 +40,9 @@ describe("AddTodo", () => {
       render(<AddTodo setTodos={mockSetTodos} />); // ARRANGE
 
       const input = screen.getByPlaceholderText("New Todo"); //ACT
-      await userEvent.type(input, "hey there");
+      fireEvent.change(input, {
+        target: { value: "hey there" },
+      });
 
       const button = screen.getByRole("button", {
         name: "Submit",
@@ -52,11 +55,13 @@ describe("AddTodo", () => {
       render(<AddTodo setTodos={mockSetTodos} />); // ARRANGE
 
       const input = screen.getByPlaceholderText("New Todo"); //ACT
-      await userEvent.type(input, "hey there");
+      fireEvent.change(input, {
+        target: { value: "hey there" },
+      });
       const button = screen.getByRole("button", {
         name: "Submit",
       });
-      await userEvent.click(button);
+      await fireEvent.click(button);
 
       expect(input).toHaveValue(""); // ASSERT
     });
@@ -65,11 +70,13 @@ describe("AddTodo", () => {
       render(<AddTodo setTodos={mockSetTodos} />); // ARRANGE
 
       const input = screen.getByPlaceholderText("New Todo"); //ACT
-      await userEvent.type(input, "hey there");
+      fireEvent.change(input, {
+        target: { value: "hey there" },
+      });
       const button = screen.getByRole("button", {
         name: "Submit",
       });
-      await userEvent.click(button);
+      await fireEvent.click(button);
 
       expect(mockSetTodos).toHaveBeenCalled(); // ASSERT
     });
